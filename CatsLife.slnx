@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="CatsLife/CatsLife.csproj" />
+  <Project Path="CatsLifeServices/CatsLifeServices.csproj" Id="89d50dc7-9a30-47ae-bc7a-89165356f8d3" />
+</Solution>
