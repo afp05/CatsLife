@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CatsLifeServices.Interfaces
 {
-    internal interface IFileWriter
+    public interface IFileWriter
     {
         Task WriteAsync(CatFact fact);
     }

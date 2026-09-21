@@ -12,7 +12,7 @@ namespace CatsLifeServices.Writers
         {
             string text = $"\"fact\": \"{fact.Fact}\", \"length\": {fact.Length}";
 
-            await File.AppendAllTextAsync("cats.txt",text+ Environment.NewLine);
+            await File.AppendAllTextAsync("cats.txt",text + Environment.NewLine);
         }
     }
 }
