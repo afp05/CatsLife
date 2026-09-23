@@ -7,6 +7,8 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Text.Json;
 using static System.Net.WebRequestMethods;
+using Microsoft.Extensions.Configuration;
+
 
 namespace CatsLifeServices.Providers
 {
@@ -15,14 +17,17 @@ namespace CatsLifeServices.Providers
 
         private readonly HttpClient _client;
 
-        public ProviderAPI(HttpClient client)
+        private readonly IConfiguration _configuration;
+
+        public ProviderAPI(HttpClient client, IConfiguration configuration)
         {
-            _client = client;   
+            _client = client;
+            _configuration = configuration;
         }
         public async Task<CatFact> GetFactAsync()
         {
-            string URI = "https://catfact.ninja/fact";
-                
+            string URI = _configuration["CatFactApi:Url"] ?? throw new InvalidOperationException("API URL is missing in configuration");
+
             var result = await _client.GetAsync(URI);
 
             result.EnsureSuccessStatusCode();
