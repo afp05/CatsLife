@@ -4,6 +4,7 @@ using CatsLifeServices.Models;
 using CatsLifeServices.Providers;
 using CatsLifeServices.Writers;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 
 
@@ -12,23 +13,16 @@ services.AddTransient<IFileWriter, FileWriterTXT>();
 services.AddTransient<IGetFact, ProviderAPI>();
 services.AddTransient<CatsLifeAppFlow>();
 services.AddHttpClient();
+services.AddLogging(builder => builder.AddConsole());
 
 ServiceProvider serviceProvider = services.BuildServiceProvider();
 
 CatsLifeAppFlow app = serviceProvider.GetRequiredService<CatsLifeAppFlow>();
-await app.RunAsync();
-CatFact fact = await app.RunAsync();
 
-Console.WriteLine(fact.Fact);
+CatFact? fact = await app.RunAsync();
 
+if (fact != null)
+{
 
-//IGetFact provider = serviceProvider.GetRequiredService<IGetFact>();
-//IFileWriter fileWriter = serviceProvider.GetRequiredService<IFileWriter>();
-
-//HttpClient client = new HttpClient();
-//ProviderAPI provider = new ProviderAPI(client);
-
-//CatFact fact = await provider.GetFactAsync();
-//FileWriterTXT filewritertxt = new FileWriterTXT();
-//Console.WriteLine($"Length: {fact.Length}, Text: {fact.Fact}");
-//await fileWriter.WriteAsync(fact);
+    Console.WriteLine(fact.Fact);
+}

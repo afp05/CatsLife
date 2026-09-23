@@ -25,13 +25,18 @@ namespace CatsLifeServices.Providers
                 
             var result = await _client.GetAsync(URI);
 
+            result.EnsureSuccessStatusCode();
+
             string json = await result.Content.ReadAsStringAsync();
+            
+            //json = " {invalid json for cathc exception test} ";
 
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             };
-            CatFact fact = JsonSerializer.Deserialize<CatFact>(json, options) ?? new CatFact();
+
+            CatFact fact = JsonSerializer.Deserialize<CatFact>(json, options) ?? throw new JsonException("API returned null JSON");
 
             return fact;
 
