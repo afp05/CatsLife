@@ -9,8 +9,18 @@ using Serilog;
 using Serilog.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 
+var switchMapping = new Dictionary<string, string>
+{
+    { "-log", "Files:LogFilePath" },
+    { "-fact", "Files:FactFilePath" },
+    { "-url", "CatFactApi:Url" },
+    { "-interval", "TimeSettings:IntervalMiliSeconds" },
+    { "-count", "TimeSettings:MaxFacts" }
+};
+Directory.CreateDirectory("c:\\CatsLife");
 IConfiguration configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
+    .AddCommandLine(args, switchMapping)
     .Build();
 
 Log.Logger = new LoggerConfiguration()

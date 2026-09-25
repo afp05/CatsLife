@@ -33,8 +33,6 @@ namespace CatsLifeServices.Providers
             result.EnsureSuccessStatusCode();
 
             string json = await result.Content.ReadAsStringAsync();
-            
-            //json = " {invalid json for cathc exception test} ";
 
             var options = new JsonSerializerOptions
             {

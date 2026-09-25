@@ -1,0 +1,9 @@
+"fact": "An adult lion's roar can be heard up to five miles (eight kilometers) away.", "length": 75
+"fact": "Many cats love having their forehead gently stroked.", "length": 52
+"fact": "A female cat will be pregnant for approximately 9 weeks or between 62 and 65 days from conception to delivery.", "length": 110
+"fact": "Approximately 24 cat skins can make a coat.", "length": 43
+"fact": "During the time of the Spanish Inquisition, Pope Innocent VIII condemned cats as evil and thousands of cats were burned. Unfortunately, the widespread killing of cats led to an explosion of the rat population, which exacerbated the effects of the Black Death.", "length": 259
+"fact": "Phoenician cargo ships are thought to have brought the first domesticated cats to Europe in about 900 BC.", "length": 105
+"fact": "Cats take between 20-40 breaths per minute.", "length": 43
+"fact": "Contrary to popular belief, the cat is a social animal. A pet cat will respond and answer to speech , and seems to enjoy human companionship.", "length": 141
+"fact": "Cats spend nearly 1/3 of their waking hours cleaning themselves.", "length": 64

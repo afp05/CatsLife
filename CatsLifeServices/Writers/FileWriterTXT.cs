@@ -19,6 +19,12 @@ namespace CatsLifeServices.Writers
         {
             string text = $"\"fact\": \"{fact.Fact}\", \"length\": {fact.Length}";
             string filePath = _configuration["Files:FactFilePath"] ?? throw new InvalidOperationException("FactFilePath is not configured.");
+            string? directory = Path.GetDirectoryName(filePath);
+
+            if (!string.IsNullOrEmpty(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
 
             await File.AppendAllTextAsync(filePath, text + Environment.NewLine);
         }
