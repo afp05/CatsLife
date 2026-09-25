@@ -30,10 +30,5 @@ ServiceProvider serviceProvider = services.BuildServiceProvider();
 
 CatsLifeAppFlow app = serviceProvider.GetRequiredService<CatsLifeAppFlow>();
 
-CatFact? fact = await app.RunAsync();
+ await app.RunAsync();
 
-if (fact != null)
-{
-
-    Console.WriteLine(fact.Fact);
-}
