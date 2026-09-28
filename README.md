@@ -8,7 +8,7 @@ The application uses dependency injection, external configuration, logging, erro
 
 - Fetches random cat facts from an external API
 - Saves retrieved facts to a text file
-- Dependency Injection
+- Uses Dependency Injection pattern
 - Asynchronous API and file operations
 - JSON deserialization with `System.Text.Json`
 - Configuration using `appsettings.json`
@@ -29,7 +29,7 @@ The application uses dependency injection, external configuration, logging, erro
 Clone the repository and navigate to the solution directory:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/afp05/CatsLife.git
 cd CatsLife
 ```
 
