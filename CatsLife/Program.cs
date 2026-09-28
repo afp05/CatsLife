@@ -1,6 +1,5 @@
 ﻿using CatsLife;
 using CatsLifeServices.Interfaces;
-using CatsLifeServices.Models;
 using CatsLifeServices.Providers;
 using CatsLifeServices.Writers;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,10 +13,10 @@ var switchMapping = new Dictionary<string, string>
     { "-log", "Files:LogFilePath" },
     { "-fact", "Files:FactFilePath" },
     { "-url", "CatFactApi:Url" },
-    { "-interval", "TimeSettings:IntervalMiliSeconds" },
+    { "-interval", "TimeSettings:IntervalMilliSeconds" },
     { "-count", "TimeSettings:MaxFacts" }
 };
-Directory.CreateDirectory("c:\\CatsLife");
+
 IConfiguration configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
     .AddCommandLine(args, switchMapping)
@@ -25,7 +24,7 @@ IConfiguration configuration = new ConfigurationBuilder()
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.File(configuration["Files:LogFilePath"] ?? throw new InvalidOperationException("LogFilePath is not configured."))
-    .CreateLogger();  
+    .CreateLogger();
 
 ServiceCollection services = new ServiceCollection();
 
@@ -34,11 +33,12 @@ services.AddTransient<IFileWriter, FileWriterTXT>();
 services.AddTransient<IGetFact, ProviderAPI>();
 services.AddTransient<CatsLifeAppFlow>();
 services.AddHttpClient();
-services.AddLogging(builder => builder.AddSerilog(Log.Logger) );
+services.AddLogging(builder => builder.AddSerilog(Log.Logger));
 
 ServiceProvider serviceProvider = services.BuildServiceProvider();
 
 CatsLifeAppFlow app = serviceProvider.GetRequiredService<CatsLifeAppFlow>();
 
- await app.RunAsync();
+
+await app.RunAsync();
 

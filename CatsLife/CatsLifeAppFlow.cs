@@ -23,24 +23,28 @@ namespace CatsLife
 
         public async Task RunAsync()
         {
-
-            string? intervalValue = _configuration["TimeSettings:IntervalMiliSeconds"];
+            ShowConfiguration();
+            string? intervalValue = _configuration["TimeSettings:IntervalMilliSeconds"];
             string? maxFactsValue = _configuration["TimeSettings:MaxFacts"];
 
 
             if (!int.TryParse(maxFactsValue, out int maxFacts) || maxFacts <= 0)
 
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Invalid MaxFacts value. Program will use default value: 5");
                 maxFacts = 5;
+                Console.ResetColor();
 
             }
 
-            if (!int.TryParse(intervalValue, out int intervalMiliSeconds) || intervalMiliSeconds < 0)
+            if (!int.TryParse(intervalValue, out int intervalMilliSeconds) || intervalMilliSeconds < 0)
 
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Invalid IntervalMilliseconds value. Using default value: 1500 ms.");
-                intervalMiliSeconds = 1500;
+                intervalMilliSeconds = 1500;
+                Console.ResetColor();
 
             }
 
@@ -55,35 +59,60 @@ namespace CatsLife
 
                     if (i < maxFacts - 1)
                     {
-                        await Task.Delay(intervalMiliSeconds);
+                        await Task.Delay(intervalMilliSeconds);
                     }
                 }
                 catch (HttpRequestException ex)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"An HTTP error occurred while fetching the cat fact. See log for details.");
                     _logger.LogError(ex, "An HTTP error occurred while fetching the cat fact. Details:");
+                    Console.ResetColor();
 
                 }
                 catch (JsonException ex)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"A JSON error occurred while processing the cat fact. See log for details.");
                     _logger.LogError(ex, "A JSON error occurred while processing the cat fact. Details:");
+                    Console.ResetColor();
 
                 }
                 catch (IOException ex)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"An I/O error occurred while writing the cat fact to file. See log for details.");
                     _logger.LogError(ex, "An I/O error occurred while writing the cat fact to file. Details:");
+                    Console.ResetColor();
 
                 }
                 catch (UnauthorizedAccessException ex)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"Access denied while writing the cat fact to file. See log for details.");
                     _logger.LogError(ex, "Access denied while writing the cat fact to file. Details:");
-
+                    Console.ResetColor();
                 }
             }
 
+        }
+
+        private void ShowConfiguration()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            foreach (var section in _configuration.GetChildren())
+            {
+                Console.WriteLine(section.Key);
+
+                foreach (var setting in section.GetChildren())
+                {
+                    Console.WriteLine($"  {setting.Key}: {setting.Value}");
+                }
+            }
+
+            Console.WriteLine();
+            Console.ResetColor();
         }
     }
 }
